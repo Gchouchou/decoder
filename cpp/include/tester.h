@@ -1,18 +1,15 @@
 #ifndef testerh
 #define testerh
-#include "algo.h"
-// #define verbose 1
+#include "decode_param.h"
+#include "gamestate.h"
 
-namespace printStuff
-{
-    void printParams(algo::algoparam &param);
-    void printResults(const array<int,3*3> &results);
-} // namespace printStuff
+#include <array>
+// #define verbose 1
 
 namespace tester
 {
     // tests all the possible password to get a statistic
-    const array<int,3*3>* testAll(const gamestate &g,const algo::algoparam &params);
+    const std::array<int,3*3>* testAll(const gamestate &g,const algo::decodeparam &params);
 } // namespace tester
 
 #endif

@@ -1,4 +1,13 @@
 #include "algo.h"
+#include "eqpasswd.h"
+#include "passwds.h"
+#include "hint.h"
+#include "passwd.h"
+
+#include <map>
+#include <algorithm>
+
+using namespace std;
 
 struct untestn
 { 
@@ -25,8 +34,8 @@ namespace algoHelpers
     double evaluateHint(const hint &h, const passwd &guess, const passwds &currpos, double scale, double cscale, double absScale);
 } // namespace algoHelpers
 
-const passwd* algo::selectGuess(const gamestate &g, const algoparam &params) {
-    double bestscore = -DBL_MAX,score = 0;
+const passwd* algo::selectGuess(const gamestate &g, const decodeparam &params) {
+    double bestscore = -__DBL_MAX__ +2,score = 0;
     double subscore;
     int eqrsolsize;
     const hint *evaluation;

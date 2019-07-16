@@ -1,6 +1,7 @@
 #include "genetic.h"
 
 using namespace Genetic;
+using namespace std;
 
 const AbstractFitnessCal *Individual::function = nullptr;
 
@@ -60,12 +61,12 @@ Individual* Individual::mate(Individual &par2)
   
         // if prob is less than 0.45, insert gene 
         // from parent 1  
-        if(p < 0.40) 
+        if(p < 0.5*(1-MUTATION_CHANCE)) 
             child_chromosome += chromosome[i]; 
   
         // if prob is between 0.45 and 0.90, insert 
         // gene from parent 2 
-        else if(p < 0.80) 
+        else if(p < 1- MUTATION_CHANCE) 
             child_chromosome += par2.chromosome[i]; 
   
         // otherwise insert random gene(mutate),  

@@ -6,6 +6,7 @@
 #include <array>
 
 class eqpasswd;
+class hint;
 
 class passwd
 {

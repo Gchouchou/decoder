@@ -4,9 +4,9 @@
 #include "tester.h"
 
 namespace converters {
-    const algo::algoparam* decode(string chromosome) {
+    const algo::decodeparam* decode(std::string chromosome) {
         char c;
-        algo::algoparam *params = new algo::algoparam();
+        algo::decodeparam *params = new algo::decodeparam();
         params->absScale = 0;
         params->scale = 0;
         params->cscale = 0;
@@ -57,7 +57,7 @@ namespace converters {
 
 int decode_fitness::cal_fitness(const std::string &chromosome) const{
     int i =0,fitness = 0;
-    const algo::algoparam *params = converters::decode(chromosome);
+    const algo::decodeparam *params = converters::decode(chromosome);
     const std::array<int,3*3> *results = tester::testAll(*situation,*params);
     delete(params);
     for (auto it = results->begin(); it != results->end(); it++,i++){

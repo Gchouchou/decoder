@@ -1,7 +1,7 @@
 #ifndef decodefith
 #define decodefith
 #include "fitness_funct.h"
-#include "game.h"
+#include "gamestate.h"
 
 // applied to the decoder game
 class decode_fitness : AbstractFitnessCal

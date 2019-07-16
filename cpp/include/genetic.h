@@ -1,17 +1,15 @@
 #ifndef genetich
 #define genetich
-#include "game.h"
 #include "fitness_funct.h"
-
-using namespace std;
 
 #define POPULATION_SIZE 100
 #define GENOME_SIZE 10
+#define MUTATION_CHANCE .2
 
 namespace Genetic {
     // VALID GENES
     // trying for 5 genes with each 10 combinations
-    const string GENES = "abcdefghij";
+    const std::string GENES = "abcdefghij";
 
     // Function to generate random numbers in given range
     int random_num(int start, int end);
@@ -20,7 +18,7 @@ namespace Genetic {
     char mutated_genes();
 
     // create chromosome or string of genes 
-    string create_gnome();
+    std::string create_gnome();
 
     class Individual
     {
@@ -29,7 +27,7 @@ namespace Genetic {
     public:
         // data members
         int fitness;
-        string chromosome;
+        std::string chromosome;
         bool eval;
 
         // helper methods
@@ -38,8 +36,8 @@ namespace Genetic {
         static bool compareptr(const Individual *ind1, const Individual *ind2);
 
         // constructor
-        Individual(string chromosome);
-        Individual(string chromosome,int fitness);
+        Individual(std::string chromosome);
+        Individual(std::string chromosome,int fitness);
     };
 
 }
