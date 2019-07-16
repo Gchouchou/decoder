@@ -1,6 +1,7 @@
 #ifndef genetich
 #define genetich
 #include "game.h"
+#include "fitness_funct.h"
 
 using namespace std;
 
@@ -24,7 +25,7 @@ namespace Genetic {
     class Individual
     {
     private:
-        static const gamestate* situation;
+        static const AbstractFitnessCal *function;
     public:
         // data members
         int fitness;
@@ -33,8 +34,6 @@ namespace Genetic {
 
         // helper methods
         void cal_fitness();
-        static void setSituation(const gamestate &s) {situation = new gamestate(s);}
-        static void delSituation() {delete(situation);}
         Individual* mate(Individual &parent2); 
         static bool compareptr(const Individual *ind1, const Individual *ind2);
 

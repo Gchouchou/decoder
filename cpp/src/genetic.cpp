@@ -1,9 +1,8 @@
 #include "genetic.h"
-#include "converteval.h"
 
 using namespace Genetic;
 
-const gamestate* Individual::situation = nullptr;
+const AbstractFitnessCal *Individual::function = nullptr;
 
 int Genetic::random_num(int start, int end) 
 { 
@@ -42,7 +41,7 @@ Individual::Individual(string chromosome,int fitness) {
 
 void Individual::cal_fitness() {
     int i = 0;
-    this->fitness = 0;
+    this->fitness = function->cal_fitness(chromosome);
     this->eval = true;
     // fitness = random_num(0,200);
 }
@@ -57,7 +56,7 @@ Individual* Individual::mate(Individual &par2)
     for(int i = 0;i<len;i++) 
     { 
         // random probability  
-        float p = random_num(0, 100)/100; 
+        float p = random_num(0, 100)/(float)100; 
   
         // if prob is less than 0.45, insert gene 
         // from parent 1  

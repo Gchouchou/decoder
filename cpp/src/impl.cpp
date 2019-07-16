@@ -139,8 +139,8 @@ void readGen(int gen,vector<Individual*> &pop) {
         while (inf) {
             string line;
             getline(inf,line);
-            int fit = std::stoi(line.substr(GENOME_SIZE+1));
-            if (line.length() == GENOME_SIZE) {
+            if (line.length() >= GENOME_SIZE) {
+                int fit = std::stoi(line.substr(GENOME_SIZE+1));
                 pop.push_back(new Individual(line.substr(0,GENOME_SIZE),fit));
             }
         }
