@@ -1,24 +1,29 @@
 CC := g++
 SRCDIR := src
 BUILDDIR := build
+INCDIR := include
 TARGET := bin/genAlg
+VPATH := $(SRCDIR)
 
 SRCEXT := cpp
-SOURCES := $(shell find $(SRCDIR) -type f -name '*.$(SRCEXT)')
-OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
-CFLAGS := -g -Wall
-INC := -I include
+SOURCES := $(shell find $(SRCDIR) -type f -name '*.$(SRCEXT)' -printf "%f\n")
+OBJECTS := $(patsubst %.$(SRCEXT),$(BUILDDIR)/%.o,$(SOURCES))
+DEB := $(OBJECTS:.o=.d)
+CFLAGS := -g -Wall -MMD
+INC := -I $(INCDIR)
 
 $(TARGET): $(OBJECTS)
 	@echo " Linking..."
-	@echo " $(CC) $^ -o $(TARGET)"; $(CC) $^ -o $(TARGET)
+	$(CC) $^ -o $(TARGET)
 
-$(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
+$(BUILDDIR)/%.o: %.$(SRCEXT)
 	@mkdir -p $(BUILDDIR)
-	@echo " $(CC) $(CFLAGS) $(INC) -c -o $@ $<"; $(CC) $(CFLAGS) $(INC) -c -o $@ $<
+	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
+
+-include $(DEB)
 
 clean:
 	@echo " Cleaning..."; 
-	@echo " $(RM) -r $(BUILDDIR) $(TARGET)"; $(RM) -r $(BUILDDIR) $(TARGET)
+	$(RM) -r $(BUILDDIR) $(TARGET)
 
 .PHONY: clean
