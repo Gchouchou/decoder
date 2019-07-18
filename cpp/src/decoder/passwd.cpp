@@ -1,4 +1,8 @@
 #include "passwd.h"
+#include "hint.h"
+#include "eqpasswd.h"
+
+using namespace decoder;
 
 // constructor
 passwd::passwd(int first, int second, int third) {

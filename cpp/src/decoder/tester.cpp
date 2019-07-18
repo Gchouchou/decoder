@@ -1,14 +1,17 @@
 #include "tester.h"
 #include "algo.h"
 #include "passwd.h"
+#include "eqpasswd.h"
 #include "passwds.h"
 #include "round.h"
+#include "gamestate.h"
 
 #include <iostream>
 
 using namespace std;
+using namespace decoder;
 
-const array<int,3*3>* tester::testAll(const gamestate &g,const algo::decodeparam &params) {
+const array<int,3*3>* decoder::testAll(const gamestate &g,const decoder::decodeparam &params) {
 
     // allocated memory
     array<int,3*3> *result = new array<int,3*3>();
@@ -34,7 +37,7 @@ const array<int,3*3>* tester::testAll(const gamestate &g,const algo::decodeparam
             #endif
 
             // keep guessing and and update
-            guess = algo::selectGuess(*simulation,params);
+            guess = selectGuess(*simulation,params);
 
              #if verbose>=2
             cout << "Most optimal guess is ";
@@ -44,9 +47,9 @@ const array<int,3*3>* tester::testAll(const gamestate &g,const algo::decodeparam
             // loop
             while (guess != currsol && simulation->getturnNumber() < 3*3-1) {
                 // create the round
-                game::round r(*guess,*currsol);
+                round r(*guess,*currsol);
                 simulation->playRound(r);
-                guess = algo::selectGuess(*simulation,params);
+                guess = selectGuess(*simulation,params);
 
                  #if verbose>=2
                 cout << "Most optimal guess is ";

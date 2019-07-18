@@ -5,9 +5,9 @@
 #include <array>
 
 // print elements
-namespace printStuff
+namespace decoder
 {
-    void printParams(algo::decodeparam &param);
+    void printParams(decoder::decodeparam &param);
     void printResults(const std::array<int,3*3> &results);
 } // namespace printStuff
 #endif

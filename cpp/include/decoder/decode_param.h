@@ -1,7 +1,7 @@
 #ifndef decodeparamh
 #define decodeparamh
 
-namespace algo {
+namespace decoder {
     
     struct decodeparam {
         // cscore is the constant added to every possible solution,

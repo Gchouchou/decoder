@@ -1,6 +1,6 @@
 #include "gamestate.h"
 
-using namespace game;
+using namespace decoder;
 
 gamestate::gamestate() {
     turnNumber = 1;

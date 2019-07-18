@@ -1,4 +1,7 @@
 #include "hint.h"
+#include "passwd.h"
+
+using namespace decoder;
 
 // constructor
 hint::hint(int o, int t, int x){

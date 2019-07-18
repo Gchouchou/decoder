@@ -1,6 +1,10 @@
 #include "passwds.h"
+#include "eqpasswd.h"
+#include "hint.h"
+#include "passwd.h"
 
 using namespace std;
+using namespace decoder;
 
 // initialization of private static members
 const passwds* passwds::allposs = nullptr;

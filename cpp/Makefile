@@ -26,6 +26,7 @@ $(BUILDDIR)/%.o: %.$(SRCEXT)
 -include $(DEP)
 
 clean:
+	@clear
 	@echo " Cleaning..."; 
 	$(RM) -r $(BUILDDIR) $(TARGET)
 

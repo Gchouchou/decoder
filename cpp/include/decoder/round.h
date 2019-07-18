@@ -3,7 +3,7 @@
 #include "passwd.h"
 #include "hint.h"
 
-namespace game {
+namespace decoder {
     struct round
     {
         const passwd *guess;
