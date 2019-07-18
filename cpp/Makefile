@@ -3,24 +3,27 @@ SRCDIR := src
 BUILDDIR := build
 INCDIR := include
 TARGET := bin/genAlg
-VPATH := $(SRCDIR)
 
 SRCEXT := cpp
-SOURCES := $(shell find $(SRCDIR) -type f -name '*.$(SRCEXT)' -printf "%f\n")
-OBJECTS := $(patsubst %.$(SRCEXT),$(BUILDDIR)/%.o,$(SOURCES))
-DEB := $(OBJECTS:.o=.d)
+SOURCES := $(shell find $(SRCDIR) -type f -name '*.$(SRCEXT)')
+SOURCENAMES:= $(notdir $(SOURCES))
+SOURCEDIRS := $(sort $(dir $(SOURCES)))
+HEADERDIRS := $(sort $(shell find $(INCDIR) -type f -name '*.h' -printf "%h\n"))
+OBJECTS := $(patsubst %.$(SRCEXT),$(BUILDDIR)/%.o,$(SOURCENAMES))
+DEP := $(OBJECTS:.o=.d)
 CFLAGS := -g -Wall -MMD
-INC := -I $(INCDIR)
+INC := $(addprefix -I ,$(HEADERDIRS))
+vpath %.$(SRCEXT) $(SOURCEDIRS)
 
 $(TARGET): $(OBJECTS)
 	@echo " Linking..."
-	$(CC) $^ -o $(TARGET)
+	$(CC) $^ -o $@
 
 $(BUILDDIR)/%.o: %.$(SRCEXT)
 	@mkdir -p $(BUILDDIR)
 	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
--include $(DEB)
+-include $(DEP)
 
 clean:
 	@echo " Cleaning..."; 
