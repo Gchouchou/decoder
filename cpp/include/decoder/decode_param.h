@@ -1,13 +1,9 @@
-#ifndef algoh
-#define algoh
-#include <map>
-#include <algorithm>
-#include <float.h>
-#include "game.h"
+#ifndef decodeparamh
+#define decodeparamh
 
-namespace algo {
+namespace decoder {
     
-    struct algoparam {
+    struct decodeparam {
         // cscore is the constant added to every possible solution,
         double cscore;
         // sscore gives points according the how many are in eqclass,
@@ -19,8 +15,5 @@ namespace algo {
         // absScale is default rate at which the score increases
         double absScale;
     };
-
-    // the algorithm calculates how many password it removes on average with bonuses:
-    const passwd* selectGuess(const gamestate &g, const algoparam &params);
 }
 #endif

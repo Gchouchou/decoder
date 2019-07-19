@@ -1,24 +1,33 @@
 CC := g++
 SRCDIR := src
 BUILDDIR := build
+INCDIR := include
 TARGET := bin/genAlg
- 
+
 SRCEXT := cpp
-SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
-OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
-CFLAGS := -g -Wall
-INC := -I include
+SOURCES := $(shell find $(SRCDIR) -type f -name '*.$(SRCEXT)')
+SOURCENAMES:= $(notdir $(SOURCES))
+SOURCEDIRS := $(sort $(dir $(SOURCES)))
+HEADERDIRS := $(sort $(shell find $(INCDIR) -type f -name '*.h' -printf "%h\n"))
+OBJECTS := $(patsubst %.$(SRCEXT),$(BUILDDIR)/%.o,$(SOURCENAMES))
+DEP := $(OBJECTS:.o=.d)
+CFLAGS := -g -Wall -MMD
+INC := $(addprefix -I ,$(HEADERDIRS))
+vpath %.$(SRCEXT) $(SOURCEDIRS)
 
 $(TARGET): $(OBJECTS)
 	@echo " Linking..."
-	@echo " $(CC) $^ -o $(TARGET)"; $(CC) $^ -o $(TARGET)
+	$(CC) $^ -o $@
 
-$(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
+$(BUILDDIR)/%.o: %.$(SRCEXT)
 	@mkdir -p $(BUILDDIR)
-	@echo " $(CC) $(CFLAGS) $(INC) -c -o $@ $<"; $(CC) $(CFLAGS) $(INC) -c -o $@ $<
+	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
+
+-include $(DEP)
 
 clean:
+	@clear
 	@echo " Cleaning..."; 
-	@echo " $(RM) -r $(BUILDDIR) $(TARGET)"; $(RM) -r $(BUILDDIR) $(TARGET)
+	$(RM) -r $(BUILDDIR) $(TARGET)
 
 .PHONY: clean

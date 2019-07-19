@@ -1,17 +1,23 @@
-#include "game.h"
+#include "gamestate.h"
 
-using namespace game;
+using namespace decoder;
 
 gamestate::gamestate() {
     turnNumber = 1;
-    untestNumb = {1,2,3,4,5,6,7,8,9};
+    for (int i = 1; i <= 9; i++)
+    {
+        untestNumb.push_back(i);
+    }
 }
 
-gamestate::gamestate(list<round*> &rounds) {
+gamestate::gamestate(std::list<round*> &rounds) {
     round *aRound;
     // straight from default constructor
     turnNumber = 1;
-    untestNumb = {1,2,3,4,5,6,7,8,9};
+    for (int i = 1; i <= 9; i++)
+    {
+        untestNumb.push_back(i);
+    }
     // we now play the rounds
     while (!rounds.empty())
     {

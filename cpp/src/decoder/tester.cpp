@@ -1,13 +1,17 @@
 #include "tester.h"
+#include "algo.h"
+#include "passwd.h"
+#include "eqpasswd.h"
+#include "passwds.h"
+#include "round.h"
+#include "gamestate.h"
 
 #include <iostream>
-#include <iomanip>
 
-using namespace printStuff;
-using namespace algo;
-using namespace game;
+using namespace std;
+using namespace decoder;
 
-const array<int,3*3>* tester::testAll(const gamestate &g,const algoparam &params) {
+const array<int,3*3>* decoder::testAll(const gamestate &g,const decoder::decodeparam &params) {
 
     // allocated memory
     array<int,3*3> *result = new array<int,3*3>();
@@ -43,9 +47,9 @@ const array<int,3*3>* tester::testAll(const gamestate &g,const algoparam &params
             // loop
             while (guess != currsol && simulation->getturnNumber() < 3*3-1) {
                 // create the round
-                struct round r(*guess,*currsol);
+                round r(*guess,*currsol);
                 simulation->playRound(r);
-                guess = algo::selectGuess(*simulation,params);
+                guess = selectGuess(*simulation,params);
 
                  #if verbose>=2
                 cout << "Most optimal guess is ";
@@ -72,25 +76,4 @@ const array<int,3*3>* tester::testAll(const gamestate &g,const algoparam &params
     #endif
 
     return result;
-}
-
-void printStuff::printParams(algoparam &params) {
-    cout << "[" << setprecision(2) << params.cscore << ", ";
-    cout << setprecision(2) << params.sscore  << ", ";
-    cout << setprecision(2) << params.cscale  << ", ";
-    cout << setprecision(2) << params.scale << ", ";
-    cout << setprecision(2) << params.absScale;
-    cout << "]";
-}
-
-void printStuff::printResults(const array<int,3*3> &results) {
-    int index = 0;
-    cout << "[";
-    for (auto it = results.begin(); it != results.end(); it++, index++) {
-        cout << *it;
-        if (index != 8) {
-            cout << ", ";
-        }
-    }
-    cout << "]";
 }
