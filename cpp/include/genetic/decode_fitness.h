@@ -4,7 +4,7 @@
 #include "gamestate.h"
 
 // applied to the decoder game
-class decode_fitness : genetic::abstractFitnessCal
+class decode_fitness : public genetic::abstractFitnessCal
 {
 private:
     const decoder::gamestate situation;

@@ -1,7 +1,7 @@
 #ifndef genetich
 #define genetich
 
-#define POPULATION_SIZE 100
+#define POPULATION_SIZE 5
 #define GENOME_SIZE 10
 #define MUTATION_CHANCE 0.2
 

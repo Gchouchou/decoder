@@ -12,9 +12,9 @@ namespace converters {
         params->cscale = 0;
         params->cscore = 0;
         params->sscore = 0;
-        for (size_t i = 0; i < Genetic::GENES.length(); i++)
+        for (size_t i = 0; i < genetic::GENES.length(); i++)
         {
-            c = Genetic::GENES[i];
+            c = genetic::GENES[i];
             if (chromosome[0] == c) {
                 // we want a bit less variance on absScale
                 params->absScale += 0.1*i;

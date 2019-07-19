@@ -11,12 +11,12 @@ using namespace std;
 void genetic::population::evalGen() {
     if (genetic::individual::function == nullptr)
     {
-        cerr << "no fitness function object defined" << flush;
+        cerr << "no fitness function object defined\n" << flush;
         exit(2);
     }
     for (auto it = people.begin(); it != people.end(); it++) {
         // if it hasn't been already evaluated
-        if (!(*it)->getEval) {
+        if (!(*it)->getEval()) {
             (*it)->cal_fitness();
         }
     }
@@ -37,7 +37,7 @@ void genetic::population::writeFile() {
         exit(1);
     }
     for (auto it = people.begin(); it != people.end(); it++) {
-        outf << (*it)->getChro << "," << std::to_string((*it)->getFit) << endl;
+        outf << (*it)->getChro() << "," << std::to_string((*it)->getFit()) << endl;
     }
     outf.close();
 }
@@ -64,7 +64,7 @@ genetic::population* genetic::population::genFromFile(int genNumb) {
             int fit = std::stoi(line.substr(GENOME_SIZE+1));
             newPop->people.push_back(new individual(line.substr(0,GENOME_SIZE),fit));
         }
-        else if (line.length == GENOME_SIZE) {
+        else if (line.length() == GENOME_SIZE) {
             newPop->people.push_back(new individual(line.substr(0,GENOME_SIZE)));
         }
     }
