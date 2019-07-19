@@ -3,17 +3,21 @@
 #include "passwd.h"
 #include "hint.h"
 
+#include <array>
+#include <algorithm>
+
 using namespace decoder;
+typedef std::array<int,PASSWORD_LENGTH> pass;
 
 // constructor
-eqpasswd::eqpasswd(int a, int b, int c) {
-    simPasswds.push_back(new passwd(a,b,c));
-    simPasswds.push_back(new passwd(a,c,b));
-    simPasswds.push_back(new passwd(b,a,c));
-    simPasswds.push_back(new passwd(b,c,a));
-    simPasswds.push_back(new passwd(c,a,b));
-    simPasswds.push_back(new passwd(c,b,a));
+eqpasswd::eqpasswd(pass &sequence) {
+    // use standard library to create all permutations
+    do
+    {
+        simPasswds.push_back(new passwd(sequence));
+    } while (std::next_permutation(sequence.begin(),sequence.end()));
 }
+
 
 // basically the real destructor
 void eqpasswd::empty() {

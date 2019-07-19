@@ -13,6 +13,7 @@ OBJECTS := $(patsubst %.$(SRCEXT),$(BUILDDIR)/%.o,$(SOURCENAMES))
 DEP := $(OBJECTS:.o=.d)
 CFLAGS := -g -Wall -MMD
 INC := $(addprefix -I ,$(HEADERDIRS))
+# looks for any source files in sourcedir
 vpath %.$(SRCEXT) $(SOURCEDIRS)
 
 $(TARGET): $(OBJECTS)
@@ -26,7 +27,6 @@ $(BUILDDIR)/%.o: %.$(SRCEXT)
 -include $(DEP)
 
 clean:
-	@clear
 	@echo " Cleaning..."; 
 	$(RM) -r $(BUILDDIR) $(TARGET)
 

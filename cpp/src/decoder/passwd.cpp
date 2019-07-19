@@ -2,41 +2,33 @@
 #include "hint.h"
 #include "eqpasswd.h"
 
-using namespace decoder;
+#include <algorithm>
+#include <iostream>
 
-// constructor
-passwd::passwd(int first, int second, int third) {
-    password[0] = first;
-    password[1] = second;
-    password[2] = third;
-}
+using namespace decoder;
+typedef std::array<int,PASSWORD_LENGTH> pass;
 
 // equals method
-bool passwd::equals(int a, int b, int c) const{
-    return password[0] == a && password[1] == b && password[2] == c;
+bool passwd::equals(pass &pas) const{
+    return password == pas;
 }
 
 const hint* passwd::compare(const passwd &guess, const passwd &sol) {
     int o = 0,t = 0,x = 0;
-    bool b;
-    for (int i = 0; i < 3; i++)
+    int index = 0;
+    for (auto i = guess.password.begin(); i != guess.password.end(); index++,i++)
     {
-        int a = guess.at( i );
-        b = false;
-        for (int j = 0; j < 3; j++)
-        {
-            if (a == sol.at( j )){
-                b = true;
-                if (i == j) {
-                    ++o;
-                }
-                else {
-                    ++t;
-                }
-                break;
+        if (std::count(sol.password.begin(),sol.password.end(),*i) != 0) {
+            if (guess.password[index] == sol.password[index])
+            {
+                ++o;
             }
-        }
-        if (!b) {
+            else
+            {
+                ++t;
+            }
+        } else
+        {
             ++x;
         }
     }
@@ -49,5 +41,11 @@ int passwd::at(int index) const {
 }
 
 void passwd::printpasswd() const {
-    std::printf("( %d,%d,%d )", password[0],password[1],password[2]);
+    size_t i;
+    std::cout << "(";
+    for (i = 0; i < PASSWORD_LENGTH - 1; i++)
+    {
+        std::cout << password[i] << "," << std::flush;
+    }
+    std::cout << password[i] << ")" << std::flush;
 }

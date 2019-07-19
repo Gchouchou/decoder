@@ -20,7 +20,7 @@ struct untestn
  };
 
 
-namespace algoHelpers
+namespace decoder::algoHelpers
 {
     // gives a list with all of the possible guesses
     list<const passwd*>* getPossGuess(const list<int> &untestnumb);

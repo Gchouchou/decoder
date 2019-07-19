@@ -1,7 +1,9 @@
 #ifndef passwdsh
 #define passwdsh
+#include "gameSettings.h"
 
 #include <list>
+#include <array>
 
 namespace decoder {
     class eqpasswd;
@@ -38,7 +40,7 @@ namespace decoder {
         void updatePasswds(const hint *h, const passwd *p);
 
         // use three ints to find a pointer to the coresponding password
-        static const passwd* fetch(int,int,int);
+        static const passwd* fetch(std::array<int,PASSWORD_LENGTH>&);
 
         // print all passwords
         void printpasswds() const;
