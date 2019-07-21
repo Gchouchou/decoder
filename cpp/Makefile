@@ -8,11 +8,12 @@ SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -type f -name '*.$(SRCEXT)')
 SOURCENAMES:= $(notdir $(SOURCES))
 SOURCEDIRS := $(sort $(dir $(SOURCES)))
-HEADERDIRS := $(sort $(shell find $(INCDIR) -type f -name '*.h' -printf "%h\n"))
+HEADERDIRS := $(sort $(shell find . -type f -name '*.h' -printf "%h\n"))
 OBJECTS := $(patsubst %.$(SRCEXT),$(BUILDDIR)/%.o,$(SOURCENAMES))
 DEP := $(OBJECTS:.o=.d)
 CFLAGS := -g -Wall -MMD
 INC := $(addprefix -I ,$(HEADERDIRS))
+# looks for any source files in sourcedir
 vpath %.$(SRCEXT) $(SOURCEDIRS)
 
 $(TARGET): $(OBJECTS)
@@ -26,7 +27,6 @@ $(BUILDDIR)/%.o: %.$(SRCEXT)
 -include $(DEP)
 
 clean:
-	@clear
 	@echo " Cleaning..."; 
 	$(RM) -r $(BUILDDIR) $(TARGET)
 

@@ -5,16 +5,17 @@
 #include "passwds.h"
 #include "round.h"
 #include "gamestate.h"
+#include "gameSettings.h"
+#include "printObj.h"
 
 #include <iostream>
 
 using namespace std;
 using namespace decoder;
 
-const array<int,3*3>* decoder::testAll(const gamestate &g,const decoder::decodeparam &params) {
-
+const array<int,RESULT_LENGTH>* decoder::testAll(const gamestate &g,const decoder::decodeparam &params) {
     // allocated memory
-    array<int,3*3> *result = new array<int,3*3>();
+    array<int,RESULT_LENGTH> *result = new array<int,RESULT_LENGTH>();
 
     // constants
     const passwds *allposs = passwds::getallposs();
@@ -45,7 +46,7 @@ const array<int,3*3>* decoder::testAll(const gamestate &g,const decoder::decodep
             cout << ".\n";
             #endif
             // loop
-            while (guess != currsol && simulation->getturnNumber() < 3*3-1) {
+            while (guess != currsol && simulation->getturnNumber() < RESULT_LENGTH-1) {
                 // create the round
                 round r(*guess,*currsol);
                 simulation->playRound(r);

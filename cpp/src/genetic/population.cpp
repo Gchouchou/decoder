@@ -1,6 +1,7 @@
 #include "population.h"
 #include "individual.h"
 #include "genetic.h"
+#include "geneticSettings.h"
 
 #include <iostream>
 #include <fstream>

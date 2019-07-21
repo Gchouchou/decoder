@@ -1,7 +1,10 @@
 #ifndef eqpasswdh
 #define eqpasswdh
+#include "gameSettings.h"
+#include "passGen.h"
 
 #include <list>
+#include <array>
 namespace decoder {
 
     class passwds;
@@ -11,8 +14,8 @@ namespace decoder {
     class eqpasswd
     {
     private:
-        // private constructor boiz
-        eqpasswd(int,int,int);
+        // generalized constructor
+        eqpasswd(std::array<int,PASSWORD_LENGTH>&);
         // private method to free everything
         void empty();
         // same as update passwords
@@ -34,6 +37,8 @@ namespace decoder {
 
         // one friend
         friend class passwds;
+        friend void passGen::insertPass(std::list<eqpasswd*> &eqpasses,\
+        std::array<int,PASSWORD_LENGTH> &seq, int start, int pos);
     };
 }
 #endif

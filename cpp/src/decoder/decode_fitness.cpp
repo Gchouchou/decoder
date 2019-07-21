@@ -55,7 +55,7 @@ namespace converters {
 }
 
 
-int decode_fitness::cal_fitness(const std::string &chromosome) const{
+int decoder::decode_fitness::cal_fitness(const std::string &chromosome) const{
     int i =0,fitness = 0;
     const decoder::decodeparam *params = converters::decode(chromosome);
     const std::array<int,3*3> *results = decoder::testAll(situation,*params);

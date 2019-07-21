@@ -1,6 +1,7 @@
 #ifndef indivh
 #define indivh
 #include "fitness_funct.h"
+#include "geneticSettings.h"
 
 #include <string>
 

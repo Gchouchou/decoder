@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void decoder::printParams(decoder::decodeparam &params) {
+void decoder::printParams(const decoder::decodeparam &params) {
     cout << "[" << setprecision(2) << params.cscore << ", ";
     cout << setprecision(2) << params.sscore  << ", ";
     cout << setprecision(2) << params.cscale  << ", ";

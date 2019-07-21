@@ -1,4 +1,5 @@
 #include "genetic.h"
+#include "geneticSettings.h"
 
 #include <random>
 

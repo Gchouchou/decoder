@@ -1,5 +1,6 @@
 #include "individual.h"
 #include "genetic.h"
+#include "geneticSettings.h"
 
 using namespace std;
 

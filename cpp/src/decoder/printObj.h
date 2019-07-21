@@ -7,7 +7,7 @@
 // print elements
 namespace decoder
 {
-    void printParams(decoder::decodeparam &param);
+    void printParams(const decoder::decodeparam &param);
     void printResults(const std::array<int,3*3> &results);
 } // namespace printStuff
 #endif

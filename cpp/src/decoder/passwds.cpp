@@ -2,9 +2,11 @@
 #include "eqpasswd.h"
 #include "hint.h"
 #include "passwd.h"
+#include "passGen.h"
 
 using namespace std;
 using namespace decoder;
+typedef array<int,PASSWORD_LENGTH> pass;
 
 // initialization of private static members
 const passwds* passwds::allposs = nullptr;
@@ -26,18 +28,10 @@ passwds::passwds() {
 
 void passwds::generateAllposs() {
     // at compile time so everything is good
-    std::list<eqpasswd*> newallposs;
-    // create all the passwords
-    for (int i = 1; i < 10; i++)
-    {
-        for (int j = i+1; j < 10; j++)
-        {
-            for (int k = j+1; k < 10; k++)
-            {
-                newallposs.push_back(new eqpasswd(i,j,k));
-            }
-        }
-    }
+    list<eqpasswd*> newallposs;
+    pass dummyseq;
+    // do some recursive looping and disgusting stuff
+    passGen::insertPass(newallposs,dummyseq,1,0);
     allposs = new passwds(newallposs);
 }
 
@@ -83,14 +77,14 @@ passwds::~passwds() {
     }
 }
 
-const passwd* passwds::fetch(int a,int b,int c) {
+const passwd* passwds::fetch(pass &passw) {
     passwd *pass = nullptr;
     for (auto it = allposs->passClass.begin(); it != allposs->passClass.end(); it++)
     {
         for (auto eqit = ( *it )->simPasswds.begin(); eqit != ( *it )->simPasswds.end(); eqit++)
         {
             pass = *eqit;
-            if (pass->equals(a,b,c))
+            if (pass->equals(passw))
             {
                 return pass;
             }
