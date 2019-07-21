@@ -14,8 +14,6 @@ using namespace std;
 using namespace decoder;
 
 const array<int,RESULT_LENGTH>* decoder::testAll(const gamestate &g,const decoder::decodeparam &params) {
-    array<int,3> a {1,4,3};
-
     // allocated memory
     array<int,RESULT_LENGTH> *result = new array<int,RESULT_LENGTH>();
 
@@ -49,8 +47,6 @@ const array<int,RESULT_LENGTH>* decoder::testAll(const gamestate &g,const decode
             #endif
             // loop
             while (guess != currsol && simulation->getturnNumber() < RESULT_LENGTH-1) {
-                if (currsol == passwds::fetch(a))
-                    cout << "abcwtf";
                 // create the round
                 round r(*guess,*currsol);
                 simulation->playRound(r);
