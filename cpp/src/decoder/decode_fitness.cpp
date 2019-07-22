@@ -1,7 +1,7 @@
 #include "decode_fitness.h"
 #include "algo.h"
-#include "genetic.h"
 #include "tester.h"
+#include "geneticSettings.h"
 
 namespace converters {
     const decoder::decodeparam* decode(std::string chromosome) {

@@ -18,6 +18,8 @@ namespace decoder {
     public:
         // just allows us to access elements
         int at(int) const;
+        auto cbegin() const{return password.cbegin();}
+        auto cend() const{return password.cend();}
         bool equals(std::array<int,PASSWORD_LENGTH>&) const;
         static const hint* compare(const passwd &guess, const passwd &sol);
 

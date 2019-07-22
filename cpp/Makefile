@@ -1,4 +1,6 @@
 CC := g++
+CFLAGS_PRE := -Wall -MMD
+CFLAGS_DEBUG := -g
 SRCDIR := src
 BUILDDIR := build
 INCDIR := include
@@ -11,8 +13,8 @@ SOURCEDIRS := $(sort $(dir $(SOURCES)))
 HEADERDIRS := $(sort $(shell find . -type f -name '*.h' -printf "%h\n"))
 OBJECTS := $(patsubst %.$(SRCEXT),$(BUILDDIR)/%.o,$(SOURCENAMES))
 DEP := $(OBJECTS:.o=.d)
-CFLAGS := -g -Wall -MMD
 INC := $(addprefix -I ,$(HEADERDIRS))
+CFLAGS := $(CFLAGS_PRE)
 # looks for any source files in sourcedir
 vpath %.$(SRCEXT) $(SOURCEDIRS)
 
@@ -31,3 +33,6 @@ clean:
 	$(RM) -r $(BUILDDIR) $(TARGET)
 
 .PHONY: clean
+
+# debug: CFLAGS := $(CFLAGS_PRE) $(CFLAGS_DEBUG) $(INC)
+debug: $(TARGET)
