@@ -1,10 +1,13 @@
 #include "gamestate.h"
+#include "gameSettings.h"
+
+#include <algorithm>
 
 using namespace decoder;
 
 gamestate::gamestate() {
     turnNumber = 1;
-    for (int i = 1; i <= 9; i++)
+    for (int i = 1; i <= CHAR_NUMB; i++)
     {
         untestNumb.push_back(i);
     }
@@ -14,7 +17,7 @@ gamestate::gamestate(std::list<round*> &rounds) {
     round *aRound;
     // straight from default constructor
     turnNumber = 1;
-    for (int i = 1; i <= 9; i++)
+    for (int i = 1; i <= CHAR_NUMB; i++)
     {
         untestNumb.push_back(i);
     }
@@ -34,22 +37,14 @@ void gamestate::playRound(const round &r) {
 }
 
 void gamestate::updateuntest(const passwd &guess) {
-    int guesses, untest,n;
-    bool ispresent;
+    int untest,n;
     n = untestNumb.size();
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n; ++i)
     {
-        ispresent = false;
         untest = untestNumb.front();
         untestNumb.pop_front();
-        for (int j = 0; j < 3; j++)
-        {
-            guesses = guess.at(j);
-            if (untest == guesses) {
-                ispresent = true;
-            }
-        }
-        if (!ispresent)
+        // if not present
+        if (std::count(guess.cbegin(),guess.cend(),untest) == 0)
         {
             untestNumb.push_back(untest);
         }

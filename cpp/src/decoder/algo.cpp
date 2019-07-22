@@ -4,6 +4,7 @@
 #include "passwds.h"
 #include "hint.h"
 #include "passwd.h"
+#include "gameSettings.h"
 
 #include <map>
 #include <algorithm>
@@ -31,7 +32,7 @@ namespace decoder::algoHelpers
         // cleaning some passwords
         bool wrongOrder(const passwd &pass, list<int> &untested);
         // helper of the helper
-        bool order(int first,int second, list<int> &untested);
+        // bool order(int first,int second, list<int> &untested);
     } // namespace searchOpt
     double evaluateHint(const hint &h, const passwd &guess, const passwds &currpos, double scale, double cscale, double absScale);
 } // namespace algoHelpers
@@ -127,7 +128,7 @@ untestn::untestn(const list<int> &untested) {
     this->uneeded = uneeded;
     for (auto it = untested.cbegin(); it != untested.cend(); it++,index++)
     {
-        if (index < 3) {
+        if (index < PASSWORD_LENGTH) {
             needed->push_back(*it);
         } else {
             uneeded->push_back(*it);
@@ -140,9 +141,9 @@ bool algoHelpers::searchOpt::isUnwanted(const eqpasswd &claz, list<int> &unwante
     int i;
     // get a password
     const passwd *pass = *claz.cbegin();
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < PASSWORD_LENGTH; i++)
     {
-        if (find(unwanted.begin(),unwanted.end(), pass->at(i)) != unwanted.end()) {
+        if (count(unwanted.begin(),unwanted.end(), pass->at(i)) != 0) {
             // contains an unwanted number
             return true;
         }
@@ -152,16 +153,46 @@ bool algoHelpers::searchOpt::isUnwanted(const eqpasswd &claz, list<int> &unwante
 
 // the algorithm is not generalized
 bool algoHelpers::searchOpt::wrongOrder(const passwd &pass, list<int> &untested) {
-    // if the untested numbers are untested, they must be in increasing order
-    return order(pass.at(0),pass.at(1),untested) || order(pass.at(0),pass.at(2),untested) || \
-    order(pass.at(1),pass.at(2),untested);
+    // find the first untested number
+    auto old = pass.cbegin();
+    while (old != pass.cend())
+    {
+        if (count(untested.cbegin(),untested.cend(),*old) != 0)
+        {
+            break;
+        }
+        ++old;
+    }
+    // for every untested number, find a subsequent if any and check if they are increasing
+    auto it = old;
+    while (old != pass.cend())
+    {
+        // we find the next number if any that is in the untested set
+        while (it != pass.cend())
+        {
+            ++it;
+            if (count(untested.cbegin(),untested.cend(),*it) != 0)
+            {
+                break;
+            }
+        }
+        // we found something that is in wrong order
+        // using shortcircuit to avoid dereferencing the end iterator
+        if (it != pass.cend() && *old > *it)
+        {
+            return true;
+        }
+        old = it;
+    }
+    return false;
 }
 
+/*
 bool algoHelpers::searchOpt::order(int first,int second, list<int> &untested) {
-    return (find(untested.begin(), untested.end(), first) != untested.end()) && \
-    (find(untested.begin(), untested.end(), second) != untested.end()) && first > second;
+ return (find(untested.begin(), untested.end(), first) != untested.end()) && \
+ (find(untested.begin(), untested.end(), second) != untested.end()) && first > second;
 }
-
+*/
 
 double algoHelpers::evaluateHint(const hint &h, const passwd &guess, const passwds &allsol, \
 double scale, double cscale, double absScale) {

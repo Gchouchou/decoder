@@ -52,7 +52,7 @@ const array<int,RESULT_LENGTH>* decoder::testAll(const gamestate &g,const decode
                 simulation->playRound(r);
                 guess = selectGuess(*simulation,params);
 
-                 #if verbose>=2
+                #if verbose>=2
                 cout << "Most optimal guess is ";
                 guess->printpasswd();
                 cout << ".\n";

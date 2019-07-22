@@ -4,7 +4,6 @@
 #include <string>
 
 namespace genetic {
-    // VALID GENES
 
     // Function to generate random numbers in given range
     int random_num(int start, int end);
