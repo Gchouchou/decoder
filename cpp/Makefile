@@ -34,5 +34,5 @@ clean:
 
 .PHONY: clean
 
-# debug: CFLAGS := $(CFLAGS_PRE) $(CFLAGS_DEBUG) $(INC)
+debug: CFLAGS := $(CFLAGS_PRE) $(CFLAGS_DEBUG) $(INC)
 debug: $(TARGET)
